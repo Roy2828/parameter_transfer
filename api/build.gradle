@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'  //每个moudle都要加
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.Roy2828'
+group='com.github.Roy2828.api'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
