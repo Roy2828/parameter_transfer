@@ -1,0 +1,38 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'  //每个moudle都要加
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // 构建 -------》 【编译时期.....】 ------》打包 ----》安装
+    // AS3.4.1 + Gradle 5.1.1 + auto-service:1.0-rc4
+    compileOnly'com.google.auto.service:auto-service:1.0'
+    kapt 'com.google.auto.service:auto-service:1.0'
+    /** APT是javac提供的一种工具，它在编译时扫描、解析、处理注解。
+     它会对源代码文件进行检测，找出用户自定义的注解，
+     根据注解、注解处理器和相应的apt工具自动生成代码。
+
+     最终将生成的新的源文件与原来的源文件共同编译（注意：APT并不能对源文件进行修改操作，
+     只能生成新的文件，例如往原来的类中添加方法）
+     */
+
+
+    // 帮助我们通过类调用的形式来生成Java代码 [JavaPoet]
+    implementation "com.squareup:javapoet:1.13.0"
+
+    // 依赖注解
+    implementation project(":annotation")
+
+
+
+  //  这个lib只在编译器用到，是不会被打包进apk的
+}
+
+
+// java控制台输出中文乱码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
