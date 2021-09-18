@@ -1,6 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.Roy2828.annotation'
+group='com.github.Roy2828-annotation'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
