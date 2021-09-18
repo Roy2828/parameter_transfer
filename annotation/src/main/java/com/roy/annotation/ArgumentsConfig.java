@@ -18,6 +18,6 @@ public class ArgumentsConfig {
 
     public static final String OPTIONS = "myvalue"; //gradle文件里面配置的参数  用于后期扩展
 
-
+    public static final String ARGUMENTS_FIELD_CLASS_NAME = "com.roy.annotation.ArgumentsField";
 
 }

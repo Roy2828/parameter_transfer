@@ -44,9 +44,9 @@ import javax.tools.Diagnostic;
  */
 // 编译器  干活的
 @AutoService(Processor.class) // 编译期 绑定 干活 注册 也就相当于清单文件 编译器会去主动找ArgumentsProcessor 这个类
-@SupportedAnnotationTypes({"com.roy.annotation.ArgumentsField"})
+@SupportedAnnotationTypes({ArgumentsConfig.ARGUMENTS_FIELD_CLASS_NAME})
 @SupportedSourceVersion(SourceVersion.RELEASE_8) // 必须写
-@SupportedOptions("myvalue") // 接收值
+@SupportedOptions(ArgumentsConfig.OPTIONS) // 接收值
 public class ArgumentsProcessor extends AbstractProcessor {
 
     // 操作Element的工具类（类，函数，属性，其实都是Element）
