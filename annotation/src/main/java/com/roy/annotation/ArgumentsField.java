@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * author : Roy
  * version: 1.0
  */
-@Inherited
+@Inherited //当你的注解定义到类A上，此时，有个B类继承A，且没使用该注解。但是扫描的时候，会把A类设置的注解，扫描到B类上。
 @Target(ElementType.FIELD) //作用在字段上
 @Retention(RetentionPolicy.CLASS) //编译时执行
 public @interface ArgumentsField {
