@@ -70,7 +70,7 @@ public class ArgumentsProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
         if (annotations.isEmpty()) {
             MessagerUtils.print("并没有发现 被@ArgumentsField注解的地方呀");
-            return false; // 我根本就没有机会处理  你还没有干活
+            return false; 
         }
         generationAssistance(); //生成辅助工具
 
@@ -135,7 +135,7 @@ public class ArgumentsProcessor extends AbstractProcessor {
             }
         }
 
-        return true;
+        return true; //能不能给其他注解处理器使用 true表示还可以交给其他的注解处理器使用 false不可以给其他注解处理器
     }
 
 
