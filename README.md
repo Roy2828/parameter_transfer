@@ -4,6 +4,7 @@ fragment activity携带参数注解解析库
 
 使用 添加依赖库
  implementation 'com.github.Roy2828:parameter_transfer:0.0.8'
+ 
  kapt 'com.github.Roy2828.parameter_transfer:compiler:0.0.8'
  
   
@@ -52,6 +53,8 @@ fragment activity携带参数注解解析库
     MainActivity2 activity = (MainActivity2)object;
     assignment(activity,BundleUtils$$$$$$.getBundle(object));
   }
+  
+  
 
   public void assignment(MainActivity2 activity, Bundle bundle) {
     if(bundle !=null) {
