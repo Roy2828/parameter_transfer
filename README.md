@@ -1,13 +1,15 @@
 # parameter_transfer
 fragment activity携带参数注解解析库
 
-
 使用 添加依赖库
+
+```
  implementation 'com.github.Roy2828:parameter_transfer:0.0.8'
- 
+
  kapt 'com.github.Roy2828.parameter_transfer:compiler:0.0.8'
- 
-  
+```
+
+
  例子：
  public class MainActivity2 extends AppCompatActivity {
 
@@ -17,12 +19,12 @@ fragment activity携带参数注解解析库
     public String names;
     @ArgumentsField
     public int age;
-
+    
     @ArgumentsField(isSerialize = SerializeMode.Serializable)
     public Bean bean;
     @ArgumentsField(value = "parcelable",isSerialize =  SerializeMode.Parcelable)
     public ParcelableBean parcelableBean;
-
+    
     public static void launch(Context context,String bb,String ss,int age,Bean bean,ParcelableBean parcelable){
         Intent intent = new Intent(context,MainActivity2.class);
         intent.putExtra("bb",bb);
@@ -32,7 +34,7 @@ fragment activity携带参数注解解析库
         intent.putExtra("parcelable",parcelable);
         context.startActivity(intent);
     }
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ fragment activity携带参数注解解析库
 
 
 
+```
 代码生成：
  public class MainActivity2$$$$$$Arguments implements ArgumentsApi {
   @Override
@@ -53,7 +56,7 @@ fragment activity携带参数注解解析库
     MainActivity2 activity = (MainActivity2)object;
     assignment(activity,BundleUtils$$$$$$.getBundle(object));
   }
-  
+
   
 
   public void assignment(MainActivity2 activity, Bundle bundle) {
@@ -83,3 +86,7 @@ public class BundleUtils$$$$$$ {
     return bundle;
   }
 }
+```
+
+
+
