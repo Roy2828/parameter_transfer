@@ -45,7 +45,7 @@ import javax.lang.model.util.Elements;
 // 编译器  干活的
 @AutoService(Processor.class) // 编译期 绑定 干活 注册 也就相当于清单文件 编译器会去主动找ArgumentsProcessor 这个类
 @SupportedAnnotationTypes({ArgumentsConfig.ARGUMENTS_FIELD_CLASS_NAME})
-@SupportedSourceVersion(SourceVersion.RELEASE_8) // 必须写
+@SupportedSourceVersion(SourceVersion.RELEASE_8) // 必须写 指定JDK编译版本
 @SupportedOptions(ArgumentsConfig.OPTIONS) // 接收值
 public class ArgumentsProcessor extends AbstractProcessor {
 
@@ -178,7 +178,9 @@ public class ArgumentsProcessor extends AbstractProcessor {
         assignment.addModifiers(Modifier.PUBLIC);
         assignment.addParameter(ClassName.get(pageName, className), activity);
         assignment.addParameter(Constant.bundleClassName, Constant.bundleVariable);
+        assignment.beginControlFlow("if($L !=null)",Constant.bundleVariable);
         addMethodAssignmentContent(activity, assignment, elementsValue);
+        assignment.endControlFlow();
         return assignment;
     }
 
