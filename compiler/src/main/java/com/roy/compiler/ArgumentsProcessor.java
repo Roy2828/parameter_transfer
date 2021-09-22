@@ -52,7 +52,7 @@ public class ArgumentsProcessor extends AbstractProcessor {
     private Elements elementTool;// 操作Element的工具类（类，函数，属性，其实都是Element）
     private Filer filer; //文件生成器， 类 资源 等，就是最终要生成的文件 是需要Filer来完成的
     private String myValue; // （模块传递过来的）模块名  app，personal
-    private Map<TypeElement, ArrayList<Element>> typeElementArrayListMap = new HashMap<>();
+    private Map<TypeElement, ArrayList<Element>> typeElementArrayListMap = new HashMap<>(); //分类整理每个类对应的注解信息
 
     //初始化
     @Override
