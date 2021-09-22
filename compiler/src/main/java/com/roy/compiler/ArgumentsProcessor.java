@@ -113,7 +113,7 @@ public class ArgumentsProcessor extends AbstractProcessor {
                 MessagerUtils.print("---" + pageName);
                 String activity = "activity";
                 // $L 引用匿名内部类   "for (int i = $L; i < $L; i++) 这种也可以
-                // $N  引用方法
+                // $N  引用方法 使用 $N 可以引用另外一个通过名字生成的方法   但是也可以用$L也可以做到
                 // $T  类 可以自动导入类型的引用
                 // 可以使用 $S 表示一个 string
 
@@ -328,4 +328,13 @@ public class ArgumentsProcessor extends AbstractProcessor {
     }
 
 
+
+
+
+    /**
+     * 泛型代码生成  Map<String,Class<? extends List>> a;
+     assignment.addStatement("$T<String,$T> a",ClassName.get("java.util","Map"), ParameterizedTypeName.get(ClassName.get(Class.class),
+     WildcardTypeName.subtypeOf(ClassName.get("java.util","List"))));
+
+     */
 }
