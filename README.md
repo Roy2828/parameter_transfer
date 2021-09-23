@@ -12,7 +12,7 @@ fragment activity携带参数注解解析库
 
  kapt 'com.github.Roy2828.parameter_transfer:compiler:0.0.8'
 ```
-
+```
 依赖报错
 如：Annotation processors must be explicitly declared now（现在必须显式声明注释处理器。）
 
@@ -23,7 +23,7 @@ fragment activity携带参数注解解析库
                 includeCompileClasspath true
             }
         }
-
+```
 
  例子：
  public class MainActivity2 extends AppCompatActivity {
