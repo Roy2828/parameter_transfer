@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.roy.annotation.ArgumentsField
 import com.roy.annotation.SerializeMode
+import com.roy.api.ParameterManager.Companion.parameterManager
 
 class MainActivity : AppCompatActivity() {
     @JvmField
@@ -38,9 +39,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        parameterManager.inject(this)
         setContentView(R.layout.activity_main)
          findViewById<TextView>(R.id.tv3).setOnClickListener{
-             MainActivity2.launch(this@MainActivity,"sd","dsfe",12,Bean(),ParcelableBean())
+             MainActivity2.launch(this@MainActivity, "sd", "dsfe", 12, Bean(), ParcelableBean())
          }
 
     }

@@ -26,12 +26,12 @@ class ParameterManager private constructor(){
 
     fun inject(any: Any?){
         any?.let {
-            val className = it::class.java.simpleName;
+            val className = it::class.java.canonicalName;
 
             var argumentsApi:ArgumentsApi? = cacheMap.get(className)
             argumentsApi?:apply {
               try {
-                  var clazz:Class<*>? = Class.forName(any::class.java.`package`.name+"."+className+splicingName)
+                  var clazz:Class<*>? = Class.forName(className+splicingName)
                   clazz?.let {
                       argumentsApi =  clazz.newInstance() as ArgumentsApi?
                       cacheMap.put(className,argumentsApi)
