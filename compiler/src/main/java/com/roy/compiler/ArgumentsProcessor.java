@@ -32,6 +32,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 
@@ -66,6 +68,15 @@ public class ArgumentsProcessor extends AbstractProcessor {
         MessagerUtils.print("---" + myValue);
     }
 
+
+    private  TypeElement getSuperClass(TypeElement typeElement) {
+        TypeMirror type = typeElement.getSuperclass();
+        if (type.getKind() == TypeKind.NONE) {
+            return null;
+        }
+        return (TypeElement) ((DeclaredType) type).asElement();
+    }
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
         if (annotations.isEmpty()) {
@@ -83,13 +94,18 @@ public class ArgumentsProcessor extends AbstractProcessor {
             //对类的操作
             TypeElement classElement = (TypeElement) element
                     .getEnclosingElement();
+            if(isAbstract(classElement)){
+                continue;
+            }
             if (typeElementArrayListMap.get(classElement) == null) {
                 ArrayList<Element> elementsField = new ArrayList<>();
                 elementsField.add(element);
                 typeElementArrayListMap.put(classElement, elementsField);
+                addFatherElement(classElement);
             } else {
                 typeElementArrayListMap.get(classElement).add(element);
             }
+
         }
 
         if (typeElementArrayListMap.size() > 0) {
@@ -136,6 +152,24 @@ public class ArgumentsProcessor extends AbstractProcessor {
         }
 
         return true; //能不能给其他注解处理器使用 true表示还可以交给其他的注解处理器使用 false不可以给其他注解处理器
+    }
+
+    /**
+     * 添加父类节点字段
+     * @param classElement
+     */
+    private void addFatherElement(TypeElement classElement) {
+        TypeElement superClassElement = getSuperClass(classElement);  //处理父类字段
+        if (superClassElement != null) {
+            for (Element superElement :
+                    superClassElement.getEnclosedElements()) {
+                ArgumentsField field = superElement.getAnnotation(ArgumentsField.class);
+                if (field != null) {
+                    MessagerUtils.print("---2" + field.value());
+                    typeElementArrayListMap.get(classElement).add(superElement);
+                }
+            }
+        }
     }
 
 
@@ -328,6 +362,18 @@ public class ArgumentsProcessor extends AbstractProcessor {
     }
 
 
+    /**
+     * 检查是否是一个抽象类
+     *
+     * @param classElement
+     * @return
+     */
+    private boolean isAbstract(TypeElement classElement) {
+        if (classElement.getModifiers().contains(Modifier.ABSTRACT)) {
+            return true;
+        }
+        return false;
+    }
 
 
 

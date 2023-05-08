@@ -9,9 +9,7 @@ import com.roy.annotation.ArgumentsField;
 import com.roy.annotation.SerializeMode;
 import com.roy.api.ParameterManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity2 extends BaseActivity {
 
     @ArgumentsField(value = "bb")
     public String name;
@@ -32,6 +30,8 @@ public class MainActivity2 extends AppCompatActivity {
         intent.putExtra("age",age);
         intent.putExtra("bean",bean);
         intent.putExtra("parcelable",parcelable);
+        intent.putExtra("base","base1数据");
+        intent.putExtra("base2","base2数据");
         context.startActivity(intent);
     }
 
