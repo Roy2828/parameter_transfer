@@ -18,9 +18,9 @@ public class MainActivity2 extends BaseActivity {
     @ArgumentsField
     public int age;
 
-    @ArgumentsField(isSerialize = SerializeMode.Serializable)
+    @ArgumentsField(isSerialize = SerializeMode.Serializable) //可加可不加 内部会自动化
     public Bean bean;
-    @ArgumentsField(value = "parcelable",isSerialize =  SerializeMode.Parcelable)
+    @ArgumentsField(value = "parcelable")
     public ParcelableBean parcelableBean;
 
     public static void launch(Context context,String bb,String ss,int age,Bean bean,ParcelableBean parcelable){

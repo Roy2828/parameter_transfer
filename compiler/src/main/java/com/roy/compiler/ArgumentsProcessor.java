@@ -36,6 +36,7 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 
 /**
  * desc   :
@@ -55,7 +56,7 @@ public class ArgumentsProcessor extends AbstractProcessor {
     private Filer filer; //文件生成器， 类 资源 等，就是最终要生成的文件 是需要Filer来完成的
     private String myValue; // （模块传递过来的）模块名  app，personal
     private Map<TypeElement, ArrayList<Element>> typeElementArrayListMap = new HashMap<>(); //分类整理每个类对应的注解信息
-
+    private Types typeUtils;
     //初始化
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
@@ -64,7 +65,7 @@ public class ArgumentsProcessor extends AbstractProcessor {
         filer = processingEnvironment.getFiler();
         elementTool = processingEnvironment.getElementUtils();
         myValue = processingEnvironment.getOptions().get(ArgumentsConfig.OPTIONS); //接收到模块gradle配置的值
-
+        typeUtils = processingEnv.getTypeUtils();
         MessagerUtils.print("---" + myValue);
     }
 
@@ -316,16 +317,22 @@ public class ArgumentsProcessor extends AbstractProcessor {
             int javaType = typeMirror.getKind().ordinal();
             String type = typeMirror.toString(); //typeMirror.getKind().ordinal();
 
-            if (isSerialize == SerializeMode.None) {
-                String typeString = TypeUtils.type(javaType, type);
-                addParameter(variable, assignment, argumentsFiled, argumentsFiledKey, typeString);
-
-            } else if (isSerialize == SerializeMode.Serializable) {
+            if (isSerialize == SerializeMode.Serializable) {
                 // activity.bean = (Bean)bundle.getSerializable("bean");
                 assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getSerializable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
 
             } else if (isSerialize == SerializeMode.Parcelable) {
                 assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getParcelable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
+
+            } else if(isSerializeAndParcelable(element,Constant.SERIALIZABLE)){
+                assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getSerializable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
+
+            }else if(isSerializeAndParcelable(element,Constant.PARCELABLE)) {
+                assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getParcelable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
+
+            }else if (isSerialize == SerializeMode.None) {
+                String typeString = TypeUtils.type(javaType, type);
+                addParameter(variable, assignment, argumentsFiled, argumentsFiledKey, typeString);
 
             } else {
                 MessagerUtils.print("不支持其他类型");
@@ -334,6 +341,18 @@ public class ArgumentsProcessor extends AbstractProcessor {
         }
 
 
+    }
+
+
+
+
+    private boolean isSerializeAndParcelable(Element element,CharSequence str) {
+        TypeMirror  parcelableType = elementTool.getTypeElement(str).asType();
+        TypeMirror typeMirror = element.asType();
+        if(typeUtils.isSubtype(typeMirror,parcelableType)){
+            return true;
+        }
+        return false;
     }
 
 

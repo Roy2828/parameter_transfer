@@ -21,6 +21,8 @@ public class Constant {
 
     public static final String GET_STRING = "getString";
 
+    public static final String PARCELABLE = "android.os.Parcelable";
+    public static final String SERIALIZABLE = "java.io.Serializable";
 
 
     public static ClassName objectClassName = ClassName.get("java.lang", "Object");
