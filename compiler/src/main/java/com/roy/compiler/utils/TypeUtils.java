@@ -30,8 +30,10 @@ public class TypeUtils {
             typeString = "getDouble";
         } else if (kotlinType.equals(Constant.CHAR) || javaType == TypeKind.CHAR.ordinal()) {//TypeKind.CHAR.ordinal()
             typeString = "getChar";
-        } else {
-             typeString = Constant.GET_STRING;
+        } else if(kotlinType.equals(Constant.STRING)){
+            typeString = Constant.GET_STRING;
+        }else {
+             typeString = "";
         }
         return typeString;
     }

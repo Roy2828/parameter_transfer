@@ -18,6 +18,7 @@ public class Constant {
     public static final String FLOAT = "java.lang.Float";
     public static final String DOUBLE = "java.lang.Double";
     public static final String CHAR = "java.lang.Char";
+    public static final String STRING = "java.lang.String";
 
     public static final String GET_STRING = "getString";
 

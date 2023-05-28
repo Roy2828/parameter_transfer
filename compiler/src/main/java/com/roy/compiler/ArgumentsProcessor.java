@@ -324,16 +324,16 @@ public class ArgumentsProcessor extends AbstractProcessor {
             } else if (isSerialize == SerializeMode.Parcelable) {
                 assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getParcelable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
 
-            } else if(isSerializeAndParcelable(element,Constant.SERIALIZABLE)){
-                assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getSerializable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
-
-            }else if(isSerializeAndParcelable(element,Constant.PARCELABLE)) {
-                assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getParcelable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
-
-            }else if (isSerialize == SerializeMode.None) {
+            } else if (isSerialize == SerializeMode.None) {
                 String typeString = TypeUtils.type(javaType, type);
-                addParameter(variable, assignment, argumentsFiled, argumentsFiledKey, typeString);
+                if(isSerializeAndParcelable(element,Constant.SERIALIZABLE) && typeString.length()==0){
+                    assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getSerializable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
 
+                }else if(isSerializeAndParcelable(element,Constant.PARCELABLE)&& typeString.length()==0) {
+                    assignment.addStatement("$L.$L = ($L)" + Constant.bundleVariable + ".$L(\"$L\")", variable, argumentsFiled, type, "getParcelable", argumentsFiledKey == null || argumentsFiledKey.length() == 0 ? argumentsFiled : argumentsFiledKey);
+                }else {
+                    addParameter(variable, assignment, argumentsFiled, argumentsFiledKey, typeString);
+                }
             } else {
                 MessagerUtils.print("不支持其他类型");
             }

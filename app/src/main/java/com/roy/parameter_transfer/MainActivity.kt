@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     @ArgumentsField
     var l:Long?=0
 
+    @JvmField
+    @ArgumentsField
+    var bd:Boolean?=false
 
     @JvmField
     @ArgumentsField(value = "parcelable", isSerialize = SerializeMode.Parcelable)
