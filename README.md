@@ -8,9 +8,9 @@ fragment activity携带参数注解解析库
         maven { url "https://jitpack.io" }
     }
     
- implementation 'com.github.Roy2828:parameter_transfer:0.0.8'
+ implementation 'com.github.Roy2828:parameter_transfer:0.1.2'
 
- kapt 'com.github.Roy2828.parameter_transfer:compiler:0.0.8'
+ kapt 'com.github.Roy2828.parameter_transfer:compiler:0.1.2'
 ```
 ```
 依赖报错
